@@ -74,6 +74,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
     private int inActiveTabColor;
     private int activeTabColor;
     private int badgeBackgroundColor;
+    private int badgeSize;
     private int titleTextAppearance;
     private Typeface titleTypeFace;
     private boolean showShadow;
@@ -132,7 +133,6 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
             inActiveTabAlpha = ta.getFloat(R.styleable.BottomBar_bb_inActiveTabAlpha,
                     isShiftingMode() ? DEFAULT_INACTIVE_SHIFTING_TAB_ALPHA : 1);
             activeTabAlpha = ta.getFloat(R.styleable.BottomBar_bb_activeTabAlpha, 1);
-
             @ColorInt
             int defaultInActiveColor = isShiftingMode() ?
                     Color.WHITE : ContextCompat.getColor(context, R.color.bb_inActiveBottomBarItemColor);
@@ -140,6 +140,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
 
             inActiveTabColor = ta.getColor(R.styleable.BottomBar_bb_inActiveTabColor, defaultInActiveColor);
             activeTabColor = ta.getColor(R.styleable.BottomBar_bb_activeTabColor, defaultActiveColor);
+            badgeSize = ta.getDimensionPixelSize(R.styleable.BottomBar_bb_badgeSize, ViewGroup.LayoutParams.WRAP_CONTENT);
             badgeBackgroundColor = ta.getColor(R.styleable.BottomBar_bb_badgeBackgroundColor, Color.RED);
             titleTextAppearance = ta.getResourceId(R.styleable.BottomBar_bb_titleTextAppearance, 0);
             titleTypeFace = getTypeFaceFromAsset(ta.getString(R.styleable.BottomBar_bb_titleTypeFace));
@@ -246,6 +247,7 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
                 .inActiveTabColor(inActiveTabColor)
                 .activeTabColor(activeTabColor)
                 .barColorWhenSelected(defaultBackgroundColor)
+                .badgeSize(badgeSize)
                 .badgeBackgroundColor(badgeBackgroundColor)
                 .titleTextAppearance(titleTextAppearance)
                 .titleTypeFace(titleTypeFace)

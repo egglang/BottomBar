@@ -36,6 +36,7 @@ class BottomBarBadge extends TextView {
 
     private int count;
     private boolean isVisible = false;
+    private int badgeSize;
 
     BottomBarBadge(Context context) {
         super(context);
@@ -58,6 +59,15 @@ class BottomBarBadge extends TextView {
      */
     int getCount() {
         return count;
+    }
+
+    public int getBadgeSize() {
+        return badgeSize;
+    }
+
+    public BottomBarBadge setBadgeSize(int badgeSize) {
+        this.badgeSize = badgeSize;
+        return this;
     }
 
     /**
@@ -95,14 +105,17 @@ class BottomBarBadge extends TextView {
         return isVisible;
     }
 
-    void attachToTab(BottomBarTab tab, int backgroundColor) {
+    void attachToTab(BottomBarTab tab, int backgroundColor, boolean isNumberless) {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                getBadgeSize(), getBadgeSize());
 
         setLayoutParams(params);
         setGravity(Gravity.CENTER);
-        MiscUtils.setTextAppearance(this, R.style.BB_BottomBarBadge_Text);
-
+        if (isNumberless) {
+            setTextColor(backgroundColor);
+        } else {
+            MiscUtils.setTextAppearance(this, R.style.BB_BottomBarBadge_Text);
+        }
         setColoredCircleBackground(backgroundColor);
         wrapTabAndBadgeInSameContainer(tab);
     }

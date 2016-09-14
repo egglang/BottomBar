@@ -53,6 +53,7 @@ public class BottomBarTab extends LinearLayout {
     private int inActiveColor;
     private int activeColor;
     private int barColorWhenSelected;
+    private int badgeSize;
     private int badgeBackgroundColor;
 
     private AppCompatImageView iconView;
@@ -84,6 +85,7 @@ public class BottomBarTab extends LinearLayout {
         setInActiveColor(config.inActiveTabColor);
         setActiveColor(config.activeTabColor);
         setBarColorWhenSelected(config.barColorWhenSelected);
+        setBadgeSize(config.badgeSize);
         setBadgeBackgroundColor(config.badgeBackgroundColor);
         setTitleTextAppearance(config.titleTextAppearance);
         setTitleTypeface(config.titleTypeFace);
@@ -284,8 +286,17 @@ public class BottomBarTab extends LinearLayout {
         return 0;
     }
 
+    public void showNumberlessBadge() {
+        if (badge == null) {
+            badge = new BottomBarBadge(getContext());
+            badge.setBadgeSize(getBadgeSize());
+            badge.attachToTab(this, badgeBackgroundColor, true);
+        }
+        badge.setCount(-1);
+    }
+
     public void setBadgeCount(int count) {
-        if (count <= 0) {
+        if (count == 0) {
             if (badge != null) {
                 badge.removeFromTab(this);
                 badge = null;
@@ -296,10 +307,20 @@ public class BottomBarTab extends LinearLayout {
 
         if (badge == null) {
             badge = new BottomBarBadge(getContext());
-            badge.attachToTab(this, badgeBackgroundColor);
+            badge.setBadgeSize(getBadgeSize());
+            badge.attachToTab(this, badgeBackgroundColor, false);
         }
 
         badge.setCount(count);
+    }
+
+    public int getBadgeSize() {
+        return badgeSize;
+    }
+
+    public BottomBarTab setBadgeSize(int badgeSize) {
+        this.badgeSize = badgeSize;
+        return this;
     }
 
     public void removeBadge() {
@@ -561,6 +582,7 @@ public class BottomBarTab extends LinearLayout {
         private final int inActiveTabColor;
         private final int activeTabColor;
         private final int barColorWhenSelected;
+        private final int badgeSize;
         private final int badgeBackgroundColor;
         private final int titleTextAppearance;
         private final Typeface titleTypeFace;
@@ -572,6 +594,7 @@ public class BottomBarTab extends LinearLayout {
             this.activeTabColor = builder.activeTabColor;
             this.barColorWhenSelected = builder.barColorWhenSelected;
             this.badgeBackgroundColor = builder.badgeBackgroundColor;
+            this.badgeSize = builder.badgeSize;
             this.titleTextAppearance = builder.titleTextAppearance;
             this.titleTypeFace = builder.titleTypeFace;
         }
@@ -583,6 +606,7 @@ public class BottomBarTab extends LinearLayout {
             private int activeTabColor;
             private int barColorWhenSelected;
             private int badgeBackgroundColor;
+            private int badgeSize;
             private int titleTextAppearance;
             private Typeface titleTypeFace;
 
@@ -613,6 +637,11 @@ public class BottomBarTab extends LinearLayout {
 
             public Builder badgeBackgroundColor(@ColorInt int color) {
                 this.badgeBackgroundColor = color;
+                return this;
+            }
+
+            public Builder badgeSize(int badgeSize) {
+                this.badgeSize = badgeSize;
                 return this;
             }
 
