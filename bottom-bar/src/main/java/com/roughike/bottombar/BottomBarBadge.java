@@ -31,8 +31,8 @@ import android.widget.TextView;
  * limitations under the License.
  */
 class BottomBarBadge extends TextView {
-    @VisibleForTesting
-    static final String STATE_COUNT = "STATE_BADGE_COUNT_FOR_TAB_";
+//    @VisibleForTesting
+//    static final String STATE_COUNT = "STATE_BADGE_COUNT_FOR_TAB_";
 
     private int count;
     private boolean isVisible = false;
@@ -106,9 +106,9 @@ class BottomBarBadge extends TextView {
     }
 
     void attachToTab(BottomBarTab tab, int backgroundColor, boolean isNumberless) {
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
                 getBadgeSize(), getBadgeSize());
-
+        params.setMargins(0, 100, 0, 0);
         setLayoutParams(params);
         setGravity(Gravity.CENTER);
         if (isNumberless) {
@@ -189,13 +189,13 @@ class BottomBarBadge extends TextView {
         }
     }
 
-    Bundle saveState(int tabIndex) {
-        Bundle state = new Bundle();
-        state.putInt(STATE_COUNT + tabIndex, count);
-        return state;
-    }
-
-    void restoreState(Bundle bundle, int tabIndex) {
-        setCount(bundle.getInt(STATE_COUNT + tabIndex, count));
-    }
+//    Bundle saveState(int tabIndex) {
+//        Bundle state = new Bundle();
+//        state.putInt(STATE_COUNT + tabIndex, count);
+//        return state;
+//    }
+//
+//    void restoreState(Bundle bundle, int tabIndex) {
+//        setCount(bundle.getInt(STATE_COUNT + tabIndex, count));
+//    }
 }

@@ -36,6 +36,7 @@ import android.widget.TextView;
  * limitations under the License.
  */
 public class BottomBarTab extends LinearLayout {
+    static final String STATE_BADGE_COUNT = "STATE_BADGE_COUNT_FOR_TAB_";
     private static final long ANIMATION_DURATION = 150;
     private static final float ACTIVE_TITLE_SCALE = 1;
     private static final float INACTIVE_FIXED_TITLE_SCALE = 0.86f;
@@ -557,7 +558,8 @@ public class BottomBarTab extends LinearLayout {
     @Override
     public Parcelable onSaveInstanceState() {
         if (badge != null) {
-            Bundle bundle = badge.saveState(indexInContainer);
+//            Bundle bundle = badge.saveState(indexInContainer);
+            Bundle bundle = saveState();
             bundle.putParcelable("superstate", super.onSaveInstanceState());
             return bundle;
         }
@@ -565,16 +567,27 @@ public class BottomBarTab extends LinearLayout {
         return super.onSaveInstanceState();
     }
 
+    Bundle saveState() {
+        Bundle outState = new Bundle();
+        outState.putInt(STATE_BADGE_COUNT + getIndexInTabContainer(), badge.getCount());
+        return outState;
+    }
+
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        if (badge != null && state instanceof Bundle) {
-            Bundle bundle = (Bundle) state;
-            badge.restoreState(bundle, indexInContainer);
-
-            state = bundle.getParcelable("superstate");
+        if (state instanceof Bundle) {
+                Bundle bundle = (Bundle) state;
+            restoreState(bundle);
+                state = bundle.getParcelable("superstate");
         }
         super.onRestoreInstanceState(state);
     }
+
+    void restoreState(Bundle savedInstanceState) {
+        int previousBadgeCount = savedInstanceState.getInt(STATE_BADGE_COUNT + getIndexInTabContainer());
+        setBadgeCount(previousBadgeCount);
+    }
+
 
     public static class Config {
         private final float inActiveTabAlpha;
