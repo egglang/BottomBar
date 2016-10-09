@@ -382,9 +382,9 @@ public class BottomBarTab extends LinearLayout {
             setAlphas(activeAlpha);
         }
 
-        if (badge != null) {
-            badge.hide();
-        }
+//        if (badge != null) {
+//            badge.hide();
+//        }
     }
 
     void deselect(boolean animate) {
